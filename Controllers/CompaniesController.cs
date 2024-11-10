@@ -29,5 +29,23 @@ namespace WebApiWithDapper.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
+
+        [HttpGet("{id}", Name = "CompanyById")]
+        public async Task<IActionResult> GetCompany(int id)
+        {
+            try
+            {
+                var company = await _companyRepository.GetCompany(id);
+                if (company == null)
+                    return NotFound();
+
+                return Ok(company);
+            }
+            catch (Exception ex)
+            {
+                //log error
+                return StatusCode(500, ex.Message);
+            }
+        }
     }
 }
